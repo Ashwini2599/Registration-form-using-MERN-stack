@@ -1,0 +1,23 @@
+{
+  "name": "registration-form-using-mern-stack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashwini2599/Registration-form-using-MERN-stack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ashwini2599/Registration-form-using-MERN-stack/issues"
+  },
+  "homepage": "https://github.com/Ashwini2599/Registration-form-using-MERN-stack#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "mongoose": "^5.9.5"
+  }
+}

@@ -1,0 +1,189 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #258ea6;
+}
+
+.form-wrapper {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 40px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 50px #555;
+  background-color: #ffffff;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h1,h2,h3{
+  text-align: center;
+  line-height:10px;
+  font-weight:normal;
+  width: 100%;
+  color: #111;
+  margin:2px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+h1{
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size:50px;
+  font-weight: bolder;
+}
+h2{
+  margin-bottom:2px;
+  font-size:30px;
+}
+.registration{
+  background-color: black;
+}
+label {
+  font-size:20 px;
+  margin-bottom: 0.25em;
+  color: #222;
+  font-weight: normal;
+  
+}
+
+input,select,fieldset {
+  padding: 10px 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #cfcfcf;
+}
+
+input::placeholder {
+  font-size: 1.2em;
+  font-weight: lighter;
+  color:#999;
+}
+
+input.error {
+  border: 1px solid red;
+}
+
+
+.errorMessage {
+  color: red;
+  font-size: 0.75em;
+  display: relative;
+}
+
+.nameOfTheStudent,
+.dateOfBirth,
+.classAd,
+.fatherName,
+.motherName,
+.occupation,
+.permanentAddress,
+.email,
+.transport,
+.phone,
+.whatsAppNumber,
+.gender,
+.category
+ {
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+ }
+
+.dateOfBirth,
+.phone,
+.whatsAppNumber,
+.category,
+.transport,
+.gender,
+.fatherName,
+.motherName
+{
+  width:50%;
+}
+.nameOfTheStudent,
+.occupation,
+.permanentAddress,
+.email,
+.classAd
+{
+  width:100%;
+}
+
+.radio-label
+{
+  float: left;
+  clear: none;
+  display: block;
+  padding: 0px 1em 0px 8px;
+ 
+}
+input[type=radio],
+input.radio {
+  float: left;
+  clear: none;
+  margin: 2px 0 0 2px;
+}
+.register button {
+  background-color: #519e8a;
+  color: #fff;
+  border: 2px solid #fff;
+  width: 200%;
+  margin-top: 1em;
+  padding: 8px 0px;
+  font-size: 1em;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  margin-bottom: 0.25em;
+}
+
+.register button:hover {
+  color: #519e8a;
+  background-color: #fff;
+  border: 2px solid #519e8a;
+}
+
+
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.declaration{
+  padding-left: 40px;
+}
+  to {
+    transform: rotate(360deg);
+  }
+
