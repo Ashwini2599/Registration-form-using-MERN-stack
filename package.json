@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Ashwini2599/Registration-form-using-MERN-stack#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "mongoose": "^5.9.5"
+    "bootstrap": "^4.4.1",
+    "mongoose": "^5.9.5",
+    "react-router-dom": "^5.1.2"
   }
 }
