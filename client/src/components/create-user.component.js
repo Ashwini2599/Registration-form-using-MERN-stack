@@ -136,11 +136,11 @@ export default class CreateUser extends Component {
               })
           
               
-            alert('Registration of data is successful!.Move to payment.')
+            //alert('Registration of data is successful!.Move to payment.')
             
           
         
-             window.location = '/payment';
+            // window.location = '/payment';
 
 
     }
@@ -181,7 +181,7 @@ export default class CreateUser extends Component {
                     />
                     </div>
 
-                    <div className="form-group">
+                    <div style={{width:"50%"}}>
                     <label>Date of Birth</label>
                     <input
                         type="date"
@@ -193,9 +193,9 @@ export default class CreateUser extends Component {
                     />
                     </div>
 
-                    <div className="form-group">
+                    <div style={{width:"50%"}}>
                     <label>Gender
-                    <select className="form-control" value={this.state.gender} onChange={this.onChangegender}>
+                    <select  className="form-control" value={this.state.gender} onChange={this.onChangegender}>
                     <option value="Boy">Boy</option>
                     <option value="Girl">Girl</option>
                     </select>
