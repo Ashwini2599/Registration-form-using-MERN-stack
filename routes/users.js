@@ -110,7 +110,11 @@ transporter.close();
 })
 });
   
-  /*return stripe.customers.create({
+router.route("/payment").post((req,res) => {
+
+  const {token}= req.body;
+  return stripe.customers
+  .create({
     email:token.email,
     source:token.id
   })
@@ -119,56 +123,19 @@ transporter.close();
         amount : 100,
         currency: 'inr',
         customer: customer.id,
-        receipt_email :token.email,
-        shipping:{
-        name:token.card.name,
-        address:{
-          country:token.card.address_country
-        }
-      }
-    },)
+        receipt_email :token.email
+    })
   })
   .then(result =>res.status(200).json(result))
   .catch(err=> console.log(err))
-})*/
+})
 
 
 
 
-router.route('/:id').get((req, res) => {
-  User.findById(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
 
-router.route('/:id').delete((req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then(() => res.json('User deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
 
-router.route('/update/:id').post((req, res) => {
-  User.findById(req.params.id)
-    .then(user => {
-      user.nameOfTheStudent = req.body.nameOfTheStudent;
-      user.dateOfBirth = Date.parse(req.body.dateOfBirth);
-      user.gender=req.body.gender;
-      user.classAd=req.body.classAd;
-      user.fatherName=req.body.fatherName;
-      user.motherName=req.body.motherName;
-      user.permanentAddress=req.body.permanentAddress;
-      user.phone=Number(req.body.phone);
-      user.whatsAppNumber=Number(req.body.whatsAppNumber);
-      user.email=req.body.email;
-      user.category=req.body.category;
-      user.transport=req.body.transport;
-      
-      user.save()
-      .then(() => res.json('User updated!'))
-      .catch(err => res.status(400).json('Error: ' + err));
-  })
-  .catch(err => res.status(400).json('Error: ' + err));
-});
+
 
 
 module.exports = router;

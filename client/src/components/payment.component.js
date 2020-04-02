@@ -15,16 +15,16 @@ export default class Payment extends Component {
         const headers ={
           "Content-Type" : "application/json"
         }
-        return fetch(`http://localhost:5000/payment`,{
+        return fetch(`users/payment`,{
           method : "POST",
           headers,
           body : JSON.stringify(body)
         })
         .then(response => {
-          console.log(response)
-          response.json().then(data => {
-            alert(`We are in business, ${data.email}`);
-        })
+          console.log(response);
+          const {status}=response;
+          console.log(status);
+        
       })
         .catch(err=>console.log(err))
 
@@ -35,7 +35,7 @@ export default class Payment extends Component {
     return (
       
       <center><div className="container"><StripeCheckout
-        stripeKey={process.env.STRIPE_PUBLIC_KEY}
+        stripeKey="pk_test_b2oTj83AKXpEwr5HXpP7HQA600lfXm4Rd2"
         token={makePayment}
         name="Make Payment"
         billingAddress

@@ -136,11 +136,11 @@ export default class CreateUser extends Component {
               })
           
               
-            //alert('Registration of data is successful!.Move to payment.')
+            alert('Registration of data is successful!.Move to payment.')
             
           
         
-            // window.location = '/payment';
+            window.location = '/payment';
 
 
     }
