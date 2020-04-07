@@ -3,13 +3,16 @@ let User = require('../models/user.model');
 const nodemailer = require('nodemailer');
 const stripe =require("stripe")("sk_test_Kmf6ho9F40pkwPTJotOGSObj00TbcUzzmT");
 
-router.route('/').get((req, res) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+/*router.route('/').get((req, res) => {
+  const { email } = req.body;
+
+  const user =  User.findOne({ email });
+    if (user) throw Error('User already exists');
+    
+});*/
 
 router.route('/add').post((req, res) => {
+
   const nameOfTheStudent = req.body.nameOfTheStudent;
   const dateOfBirth = Date.parse(req.body.dateOfBirth);
   const gender=req.body.gender;
@@ -25,6 +28,7 @@ router.route('/add').post((req, res) => {
   
 
   const newUser = new User({
+    registrationId,
     nameOfTheStudent,
     dateOfBirth,
     gender,
@@ -50,21 +54,58 @@ newUser.save()
   <p>Thank you for registering!!!  Your form has been submitted successfully.Your paymrnt is still due.</p>`
 
   const htmlEmailSchool=`
-  <ul>
+  <h2>
     Student details:
-  </ul>
-  </li>Name of the student : ${req.body.nameOfTheStudent}</li>
-  <li>Date of Birth : ${req.body.dateOfBirth}</li>
-  <li>Gender : ${req.body.gender}</li>
-  <li>Class to which addmission is sought : ${req.body.classAd}</li>
-  <li>Father name : ${req.body.fatherName}</li>
-  <li>Mother name : ${req.body.motherName}</li>
-  <li>Permanent address : ${req.body.permanentAddress}</li>
-  <li>Phone number : ${req.body.phone}</li>
-  <li>WhatsApp number : ${req.body.whatsAppNumber}</li>
-  <li>Email : ${req.body.email}</li>
-  <li>Category : ${req.body.category}</li>
-  <li>Transport requirement : ${req.body.transport}</li>`
+  </h2>
+  <Table>
+  <tr>
+  <td>Name of the student</td>
+  <td> ${req.body.nameOfTheStudent}</td>
+  </tr>
+  <tr>
+  <td>Date of Birth</td>
+  <td>${req.body.dateOfBirth}</td>
+  </tr>
+  <tr>
+  <td>Gender</td>
+  <td>${req.body.gender}</td>
+  </tr>
+  <tr>
+  <td>Class to which addmission is sought</td>
+  <td>${req.body.classAd}</td>
+  </tr>
+  <tr>
+  <td>Father name</td>
+  <td>${req.body.fatherName}</td>
+  </tr>
+  <tr>
+  <td>Mother name</td>
+  <td>${req.body.motherName}</td>
+  </tr>
+  <tr>
+  <td>Permanent address</td>
+  <td>${req.body.permanentAddress}</td>
+  </tr>
+  <tr>
+  <td>Phone number</td>
+  <td>${req.body.phone}</td>
+  </tr>
+  <tr>
+  <td>WhatsApp number</td>
+  <td>${req.body.whatsAppNumber}</td>
+  </tr>
+  <tr>
+  <td>Email</td>
+  <td>${req.body.email}</td>
+  </tr>
+  <tr>
+  <td>Category</td>
+  <td>${req.body.category}</td>
+  </tr>
+  <tr>
+  <td>Transport requirement</td>
+  <td>${req.body.transport}</td>
+  </tr>`
 
 let transporter = nodemailer.createTransport({
   service:'gmail',
@@ -88,7 +129,7 @@ let mailOptions = {
 
 let mailOptionsSchool = {
   from: '"Ashwini"<process.env.SENDER_EMAIL>', // sender address
-  to: process.env.RECIEVER_EMAIL,// list of receivers
+  to:process.env.RECIEVER_EMAIL,// list of receivers
   subject: 'Online application registration', // Subject line
   html: htmlEmailSchool// html body
 };
@@ -112,7 +153,7 @@ transporter.close();
   
 router.route("/payment").post((req,res) => {
 
-  const {token}= req.body;
+ const {token}= req.body;
   return stripe.customers
   .create({
     email:token.email,
@@ -129,8 +170,6 @@ router.route("/payment").post((req,res) => {
   .then(result =>res.status(200).json(result))
   .catch(err=> console.log(err))
 })
-
-
 
 
 
