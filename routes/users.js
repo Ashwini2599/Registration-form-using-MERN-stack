@@ -5,7 +5,6 @@ const stripe =require("stripe")("sk_test_Kmf6ho9F40pkwPTJotOGSObj00TbcUzzmT");
 
 /*router.route('/').get((req, res) => {
   const { email } = req.body;
-
   const user =  User.findOne({ email });
     if (user) throw Error('User already exists');
     
@@ -28,7 +27,7 @@ router.route('/add').post((req, res) => {
   
 
   const newUser = new User({
-    registrationId,
+    //registrationId,
     nameOfTheStudent,
     dateOfBirth,
     gender,

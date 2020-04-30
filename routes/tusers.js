@@ -1,6 +1,12 @@
+const pdf=require('html-pdf');
 const trouter = require('../node_modules/express').Router();
 let Tuser = require('../models/tuser.model');
-//const nodemailer = require('nodemailer');
+
+
+const pdfTemplate = require('./documents/pdfhtml');
+
+
+
 
 trouter.route('/add').post((req, res) => {
     const schoolCode=req.body.schoolCode;
@@ -76,4 +82,15 @@ trouter.route('/add').post((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
 })
 
+trouter.route('/create-pdf').post((req, res) => {
+    pdf.create(pdfTemplate(req.body),{}).toFile('result.pdf',(err)=>{
+        if(err)
+        {
+            res.send(Promise.reject());
+        }
+        res.send(Promise.resolve());
+    })
+})
+
 module.exports = trouter;
+

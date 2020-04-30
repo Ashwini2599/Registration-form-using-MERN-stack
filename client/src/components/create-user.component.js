@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import doonlogo from '../doonlogo.png';
 const axios = require('axios');
+
 
 
 export default class CreateUser extends Component {
@@ -24,7 +26,7 @@ export default class CreateUser extends Component {
         
         
         this.state={
-            nameOfTheStudent: '',
+          nameOfTheStudent: '',
             dateOfBirth: new Date(),
             gender: 'Boy',
             classAd: 'Play Group',
@@ -33,7 +35,7 @@ export default class CreateUser extends Component {
             occupation: '',
             permanentAddress: '',
             phone: 0,
-            whatsAppNumber: 0,
+            whatsAppNumber:0,
             email: '',
             category:'General',
             transport: '',
@@ -112,10 +114,11 @@ export default class CreateUser extends Component {
         declarationCheck:e.target.checked
       })
     }
-
+   
     onSubmit(e){
             e.preventDefault();
             const user={
+              
                 nameOfTheStudent: this.state.nameOfTheStudent,
                 dateOfBirth: this.state.dateOfBirth,
                 gender: this.state.gender,
@@ -136,19 +139,15 @@ export default class CreateUser extends Component {
               
               axios.post('/users/add', user)
               .then((res) => {
-                console.log(res.data)
-              })
-              .catch(error => {
-                console.log(error)
+                  console.log(res.data);
+                  })
+            .catch(error => {
+                console.log(error);
               })
           
-              
-            //alert('Registration of data is successful!.Move to payment.')
+              //alert('Registration of data is successful!.Move to payment.')
+//window.location = '/payment';
             
-          
-        
-            //window.location = '/payment';
-
 
     }
   
@@ -172,32 +171,37 @@ export default class CreateUser extends Component {
             <div style={formwrapper} >
                 <form onSubmit={this.onSubmit}>
                   <div>
-                <div style={{lineHeight:"30%"}} className="form-group"> 
-                    <center><h1>Doon Public School</h1><br></br>
+                    <br></br>
+                    <div style={{lineHeight:"30%"}} className="form-group"> 
+                    <center><img src={doonlogo} alt="doonlogo" />
                     <h4>Ramzanpur,Begusarai,Bihar</h4><br></br>
                     <h5>(ISO 9001: 2015 CERTIFIED)</h5><br></br>
                     <h3>REGISTRATION FORM</h3><br></br>
                     (play group to standard XI)<br></br><br></br></center>
               </div>
-                    <div >
-                    <label>Name of the Student</label>
-                    <input
-                        type="text"
-                        placeholder="Student Name"
-                        name="nameOfTheStudent"
-                        className="form-control"
-                        required
-                        value={this.state.nameOfTheStudent}
-                        onChange={this.onChangenameOfTheStudent}
+              <br></br>
 
-                    />
+
+                  <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Name of the Student</label>
+                    <div className="col-sm-8">
+                      <input
+                          type="text"
+                          placeholder="Enter the full name of the Student"
+                          name="nameOfTheStudent"
+                          className="form-control"
+                          required
+                          value={this.state.nameOfTheStudent}
+                          onChange={this.onChangenameOfTheStudent}/>
                     </div>
-                    <br></br>
-                    <div>
-                    <label>Date of Birth</label>
+                  </div>
+
+                  <div  className="form-group row">
+                    <label className="col-sm-3 col-form-label">Date of Birth</label>
+                    <div className="col-sm-8">
                     <input
                         type="date"
-                        placeholder="date of birth"
+                        placeholder="Enter the date of birth of the Student"
                         name="dateOfBirth"
                         className="form-control"
                         required
@@ -205,19 +209,22 @@ export default class CreateUser extends Component {
                         onChange={this.onChangedateOfBirth}
                     />
                     </div>
-                    <br></br>
-                    <div className="form-row">
-                      <div className="form-group col-md-6">
-                    <label>Gender
-                    <select style={{width:"575%"}}  className="form-control" value={this.state.gender} onChange={this.onChangegender}>
+                    </div>
+                    
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Gender</label>
+                    <div className="col-sm-8">
+                    <select className="form-control" value={this.state.gender} onChange={this.onChangegender}>
                     <option value="Boy">Boy</option>
                     <option value="Girl">Girl</option>
                     </select>
-                    </label>
+                    </div>
                 </div>
-                <div className="form-group col-md-6">
-                    <label>Class to which admission is to be sought
-                    <select  style={{width:"152%"}} className="form-control" required value={this.state.classAd} onChange={this.onChangeclassAd}>
+
+                <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Class to which admission is to be sought </label>
+                    <div className="col-sm-8">
+                    <select  className="form-control" required value={this.state.classAd} onChange={this.onChangeclassAd}>
                     <option value="Play Group">Play Group</option>
                     <option value="1st Grade">1st Grade</option>
                     <option value="2nd Grade">2nd Grade</option>
@@ -230,14 +237,16 @@ export default class CreateUser extends Component {
                     <option value="9th Grade">9th Grade</option>
                     <option value="10th Grade">10th Grade</option>
                     </select>
-                  </label>
-                  </div>
                     </div>
+
+                  </div>
                     
-                    <div className="form-group">
-                    <label>Father's full name</label>
+                    
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Father's full name</label>
+                    <div className="col-sm-8">
                     <input
-                        placeholder="Father's Name"
+                        placeholder="Enter Father's full name"
                         type="text"
                         name="fatherName"
                         className="form-control"
@@ -245,11 +254,13 @@ export default class CreateUser extends Component {
                         value={this.state.fatherName}
                         onChange={this.onChangefatherName}/>
                     </div>
+                    </div>
                     
-                    <div className="form-group">
-                    <label>Mother's name</label>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Mother's name</label>
+                    <div className="col-sm-8">
                     <input
-                        placeholder="Mother's name"
+                        placeholder=" Enter Mother's name"
                         type="text"
                         name="motherName"
                         className="form-control"
@@ -257,11 +268,13 @@ export default class CreateUser extends Component {
                         value={this.state.motherName}
                         onChange={this.onChangemotherName} />
                     </div>
-                    
-                    <div className="form-group">
-                    <label>Occupation</label>
+                    </div>
+
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Occupation</label>
+                    <div className="col-sm-8">
                     <input
-                        placeholder="Occupation"
+                        placeholder="Enter Occupation"
                         type="text"
                         name="occupation"
                         className="form-control"
@@ -269,11 +282,13 @@ export default class CreateUser extends Component {
                         onChange={this.onChangeoccupation}
                     />
                     </div>
-                    
-                    <div className="form-group">
-                    <label>Permanent Address</label>
+                    </div>
+
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Permanent Address</label>
+                    <div className="col-sm-8">
                     <input
-                        placeholder="Permanent Address"
+                        placeholder="Enter Permanent Address"
                         type="text"
                         name="permanentAddress"
                         className="form-control"
@@ -281,11 +296,13 @@ export default class CreateUser extends Component {
                         onChange={this.onChangepermanentAddress}
                     />
                     </div>
+                    </div>
                     
-                    <div className="form-group">
-                    <label>Phone Number</label>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Phone Number</label>
+                    <div className="col-sm-8">
                     <input
-                        placeholder="Phone Number"
+                        placeholder="Enter Phone Number"
                         type="number"
                         name="phone"
                         required
@@ -294,11 +311,13 @@ export default class CreateUser extends Component {
                         onChange={this.onChangephone}
                     />
                     </div>
+                    </div>
                     
-                    <div className="form-group">
-                    <label>WhatsApp Number</label>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">WhatsApp Number</label>
+                    <div className="col-sm-8">
                     <input
-                        placeholder="WhatsApp Number"
+                        placeholder="Enter WhatsApp Number"
                         type="number"
                         name="whatsAppNumber"
                         required
@@ -307,9 +326,11 @@ export default class CreateUser extends Component {
                         onChange={this.onChangewhatsAppNumber}
                     />
                     </div>
+                    </div>
                     
-                    <div className="form-group">
-                    <label>Email Id</label>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Email Id</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="abc@somemail.com"
                         type="email"
@@ -320,11 +341,12 @@ export default class CreateUser extends Component {
                         onChange={this.onChangeemail}
                     />
                     </div>
+                    </div>
                     
                     <div className="form-row">
                       <div className="form-group col-md-6">
                     <label>Category
-                    <select style={{width:"420%"}} required className="form-control" value={this.state.category} onChange={this.onChangecategory}>
+                    <select style={{width:"400%"}} required className="form-control" value={this.state.category} onChange={this.onChangecategory}>
                     <option value="SC">SC</option>
                     <option value="ST">ST</option>
                     <option value="OBC">OBC</option>
@@ -335,7 +357,7 @@ export default class CreateUser extends Component {
                   
                     <div className="form-group col-md-6" >
                     <label>Transport Requirement
-                    <select style={{width:"275%"}} required className="form-control" value={this.state.transport} onChange={this.onChangetransport}>
+                    <select style={{width:"260%"}} required className="form-control" value={this.state.transport} onChange={this.onChangetransport}>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                     </select>
@@ -348,13 +370,17 @@ export default class CreateUser extends Component {
                     <input type="checkbox" name="declarationCheck" required checked={this.state.declarationCheck} onChange={this.onChangedeclarationCheck}></input>
                     <label><h6>I hereby certify that all information given above is correct</h6></label>
                     </div>
-            
+                    <br></br>
+                  
+                    
                     <div className="form-group">
                         <input type="submit"
                          required 
                          value="Register" 
+                         variant="primary" 
                          className="btn btn-primary" />
                     </div>
+                    
                 </div>
                 </form>
             </div>

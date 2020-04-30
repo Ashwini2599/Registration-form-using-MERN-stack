@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    registrationId: {
+    /*registrationId: {
         type:Number,
         autoIncrement:true
     
-    },
+    },*/
     nameOfTheStudent: {
         type: String,
         trim: true,
@@ -47,15 +47,11 @@ const userSchema = new Schema({
         maxlength: 50
     },
     phone:{
-        type: String,
+        type: Number,
         minlength:10,
         maxlength:10,
         required:true,
-        validate: {
-            validator: function(v) {
-              return /d{10}>6/.test(v);
-            },
-        }
+        
     },
     whatsAppNumber: {
         type: Number,
@@ -86,6 +82,4 @@ const userSchema = new Schema({
   const User = mongoose.model('User', userSchema);
 
   module.exports=User;
-  
-
   

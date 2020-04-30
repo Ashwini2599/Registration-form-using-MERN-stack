@@ -1,27 +1,17 @@
 import React, { Component } from 'react';
-
+import doonlogo from '../doonlogo.png';
 
 export default class Home extends Component {
 
   render() {
     return (
-      <div>
-      <center>Home Page</center>
-      <div>
-      <div className="form-group">
-          <input type="submit"
-          href="/user" 
-          value="Registration form" 
-          className="btn btn-primary" />
-      </div>
-            
-                    <div className="form-group">
-                      <input type="submit"
-                      href=""
-                         value="Tranfer certificate" 
-                         className="btn btn-primary" />
-                    </div>
-      </div>
+      <div >
+       
+        <center><br></br><br></br>
+                <img src={doonlogo} alt="doonlogo" />
+                <h4>Ramzanpur,Begusarai,Bihar</h4>
+                <h3>CBSE Affliation No - 330514</h3> 
+        </center>
       </div>
     )
   }

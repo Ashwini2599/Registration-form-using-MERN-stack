@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import doonlogo from '../doonlogo.png';
+import {saveAs} from 'file-saver';
+//import { application } from 'express/lib/express';
 const axios = require('axios');
 
 
@@ -38,6 +41,7 @@ export default class TransferUser extends Component {
         this.onChangeaddress =this.onChangeaddress.bind(this);
         this.onChangeremarks=this.onChangeremarks.bind(this);
         this.onSubmit=this.onSubmit.bind(this);
+        this.onClick=this.onClick.bind(this);
         
         
         this.state={
@@ -75,8 +79,10 @@ export default class TransferUser extends Component {
 
 
         }
+        
+  
     }
-    onChangeschoolCode(e){
+  onChangeschoolCode(e){
       this.setState({
         schoolCode:e.target.value
       })
@@ -111,6 +117,17 @@ export default class TransferUser extends Component {
           dateOfBirth: e.target.value
         })
       }
+
+     /* componentDidMount() {
+        this.setState({
+          schoolCode:TransferVerify.schoolCode,
+          admissionNo:TransferVerify.admissionNo,
+          TCNo:TransferVerify.TCNo,
+          nameOfTheStudent:TransferVerify.nameOfTheStudent,
+          fatherName:TransferVerify.fatherName,
+          motherName:TransferVerify.motherName
+        })
+      }*/
     onChangelastSchoolAttended(e){
         this.setState({
             lastSchoolAttended: e.target.value
@@ -232,7 +249,15 @@ export default class TransferUser extends Component {
          remarks : e.target.value
         })
       }
-      
+      onClick=()=>{
+        axios.post('/tusers/create-pdf',this.state)
+        .then(()=>axios.get('fetch-pdf',{responseType:'blob'}))
+        .then((res) => {
+          const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+  
+          saveAs(pdfBlob, 'TransferCerficate.pdf');
+        })
+      }
 
       onSubmit(e){
         e.preventDefault();
@@ -271,12 +296,15 @@ export default class TransferUser extends Component {
           }
           console.log(tuser);
         axios.post('/tusers/add', tuser)
-          .then((res) => {
-            console.log(res.data)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+    .then((res) => {
+      console.log(res.data)
+         })
+  .catch(error => {
+      console.log(error);
+    
+      
+    })
+    
       }
       render() {
         const formwrapper ={
@@ -295,14 +323,15 @@ export default class TransferUser extends Component {
                 <form onSubmit={this.onSubmit}>
                   <div>
                 <div style={{lineHeight:"30%"}} className="form-group"> 
-                    <center><h1>Doon Public School</h1><br></br>
+                    <center><img src={doonlogo} alt="doonlogo" />
                     <h4>Ramzanpur,Begusarai,Bihar</h4><br></br>
                     <h5>(ISO 9001: 2015 CERTIFIED)</h5><br></br>
                     <h3>TRANSFER CERTIFICATE</h3><br></br><br></br></center>
               </div>
-              <div className="form-row">
-                    <div className="form-group col-md-4">
-                    <label>School Code</label>
+              <div className="form-group row">
+  
+                    <label className="col-sm-3 col-form-label">School Code</label>
+                    <div className="col-sm-8">
                     <input
                         type="number"
                         name="schoolCode"
@@ -311,9 +340,12 @@ export default class TransferUser extends Component {
                         onChange={this.onChangeschoolCode}
                     />
                     </div>
-                   
-                    <div className="form-group col-md-4">
-                    <label>Admission No.</label>
+                    </div>
+                    
+                    <div className="form-group row">
+          
+                    <label className="col-sm-3 col-form-label">Admission No.</label>
+                    <div className="col-sm-8">
                     <input
                         type="Number"
                         name="admissionNo"
@@ -322,8 +354,11 @@ export default class TransferUser extends Component {
                         onChange={this.onChangeadmissionNo}
                     />
                     </div>
-                    <div className="form-group col-md-4">
-                    <label>TC Number</label>
+                    
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">TC Number</label>
+                    <div className="col-sm-8">
                     <input
                         type="Number"
                         name="TCNo"
@@ -332,22 +367,26 @@ export default class TransferUser extends Component {
                         onChange={this.onChangeTCNo}
                     />
                     </div>
+                  
                     </div>
-                    <div className="form-group">
-                    <label>Name of the Student</label>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Name of the Student</label>
+                    <div className="col-sm-8">
                     <input
                         type="text"
                         placeholder="Student Name"
                         name="nameOfTheStudent"
                         className="form-control"
                         value={this.state.nameOfTheStudent}
-                        onChange={this.onChangenameOfTheStudent}
+                       onChange={this.onChangenameOfTheStudent}
                     />
+                    </div>
                     </div>
 
 
-                    <div className="form-group">
-                    <label>Mother's name</label>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Mother's name</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Mother's name"
                         type="text"
@@ -357,10 +396,12 @@ export default class TransferUser extends Component {
                         onChange={this.onChangemotherName}
                     />
                     </div>
+                    </div>
 
 
-                    <div className="form-group">
-                    <label>Father's name</label>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Father's name</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Father's Name"
                         type="text"
@@ -370,10 +411,11 @@ export default class TransferUser extends Component {
                         onChange={this.onChangefatherName}
                     />
                     </div>
+                    </div>
 
-                    <div className="form-row">
-                    <div className="form-group col-md-6">
-                    <label>Date of Birth</label>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Date of Birth</label>
+                    <div className="col-sm-8">
                     <input
                         type="date"
                         placeholder="date of birth"
@@ -383,9 +425,11 @@ export default class TransferUser extends Component {
                         onChange={this.onChangedateOfBirth}
                     />
                     </div>
-
-                     <div className="form-group col-md-6">
-                    <label>Last School Attended </label>
+                    </div>
+                  
+                     <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Last School Attended </label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Last School Attended"
                         type="date"
@@ -396,9 +440,11 @@ export default class TransferUser extends Component {
                     />
                     </div>
                     </div>
-                    <div className="form-row">
-                    <div className="form-group col-md-4">
-                    <label>gender</label>
+                    
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">gender</label>
+                    <div className="col-sm-8">
+
                     <input
                         placeholder="gender"
                         type="text"
@@ -407,9 +453,12 @@ export default class TransferUser extends Component {
                         value={this.state.gender}
                         onChange={this.onChangegender}
                     />
+                  
                     </div>
-                    <div className="form-group col-md-4">
-                    <label>Nationality</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Nationality</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Nationality"
                         type="text"
@@ -419,8 +468,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangenationality}
                     />
                     </div>
-                    <div className="form-group col-md-4">
-                    <label>category</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">category</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="category"
                         type="text"
@@ -431,8 +482,10 @@ export default class TransferUser extends Component {
                     />
                     </div>
                     </div>
-                    <div className="form-group">
-                    <label>Place of Birth</label>
+                  
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Place of Birth</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Place of Birth"
                         type="text"
@@ -442,8 +495,11 @@ export default class TransferUser extends Component {
                         onChange={this.onChangeplaceOfBirth}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Date of Admission in School</label>
+                     
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Date of Admission in School</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Date of Admission in School"
                         type="date"
@@ -453,19 +509,24 @@ export default class TransferUser extends Component {
                         onChange={this.onChangedateOfAdmission}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Class in Which The Student Last Studied</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">className in Which The Student Last Studied</label>
+                    <div className="col-sm-8">
                     <input
-                        placeholder="Class in Which The Student Last Studied"
+                        placeholder="className in Which The Student Last Studied"
                         type="text"
-                        name="classLastStudied"
+                        name="classNameLastStudied"
                         className="form-control"
-                        value={this.state.classLastStudied}
-                        onChange={this.onChangeclassLastStudied}
+                        value={this.state.classNameLastStudied}
+                        onChange={this.onChangeclassNameLastStudied}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Subjects Studied</label>
+                    
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Subjects Studied</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Subjects Studied"
                         type="text"
@@ -475,8 +536,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangesubjectStudied}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Shool/Board Last Examination Result</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">School/Board Last Examination Result</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Last Examination Result"
                         type="text"
@@ -486,8 +549,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangelastExamResult}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Whether Qualified</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Whether Qualified</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Whether Qualified"
                         type="text"
@@ -497,19 +562,24 @@ export default class TransferUser extends Component {
                         onChange={this.onChangewhetherQualified}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Promoted to Class</label>
+                    </div>
+                    
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Promoted to className</label>
+                    <div className="col-sm-8">
                     <input
-                        placeholder="Promoted to class"
+                        placeholder="Promoted to className"
                         type="text"
-                        name="promotedClass"
+                        name="promotedclassName"
                         className="form-control"
-                        value={this.state.promotedClass}
-                        onChange={this.onChangepromotedClass}
+                        value={this.state.promotedclassName}
+                        onChange={this.onChangepromotedclassName}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Month up to which Student Paid Fees</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Month up to which Student Paid Fees</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Month up to which Student Paid Fees"
                         type="text"
@@ -519,8 +589,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangemonthFees}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Any Fees availed of/Concession</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Any Fees availed of/Concession</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Fee concession"
                         type="text"
@@ -530,8 +602,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangefeesConcession}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Total Number of Working Days</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Total Number of Working Days</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Working days"
                         type="Number"
@@ -541,8 +615,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangeworkingDays}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Total Number of Days Present</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Total Number of Days Present</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Days present"
                         type="Number"
@@ -552,8 +628,11 @@ export default class TransferUser extends Component {
                         onChange={this.onChangepresentDays}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Whether in NCC/Scouts</label>
+                    </div>
+                    
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Whether in NCC/Scouts</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Whether in NCC/Scouts"
                         type="text"
@@ -563,8 +642,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangescouts}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Games played/Other Activities</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Games played/Other Activities</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Games played/Other Activities"
                         type="text"
@@ -574,8 +655,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangegamesPlayed}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>General Conduct</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">General Conduct</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="General Conduct"
                         type="text"
@@ -585,8 +668,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangegeneralConduct}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Date on which student's name was struck of the school</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Date on which student's name was struck of the school</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Mention the date"
                         type="date"
@@ -596,8 +681,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangedateStruck}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Date of Issue of certificate</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Date of Issue of certificate</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Date of Issue"
                         type="date"
@@ -607,8 +694,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangedateOfIssue}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Reason for leaving the school</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Reason for leaving the school</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Reason for leaving the school"
                         type="text"
@@ -618,8 +707,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangereason}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Udise No</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Udise No</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Udise No"
                         type="Number"
@@ -629,8 +720,9 @@ export default class TransferUser extends Component {
                         onChange={this.onChangeudiseNo}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Address</label>
+                    </div><div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Address</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Address"
                         type="text"
@@ -640,8 +732,10 @@ export default class TransferUser extends Component {
                         onChange={this.onChangeaddress}
                     />
                     </div>
-                    <div className="form-group">
-                    <label>Any Other Remarks</label>
+                    </div>
+                    <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Any Other Remarks</label>
+                    <div className="col-sm-8">
                     <input
                         placeholder="Remarks"
                         type="text"
@@ -651,18 +745,13 @@ export default class TransferUser extends Component {
                         onChange={this.onChangeremarks}
                     />
                     </div>
-            
-                    <div className="form-group">
-                        <input type="submit"
-                         required 
-                         value="Submit" 
-                         className="btn btn-primary" />
-                    </div>
-                    <div className="form-group">
-                        <input type="submit"
-                         required 
-                         value="Download" 
-                         className="btn btn-primary" />
+                    
+                    
+                   
+                   <button className="btn btn-primary" onClick={this.onClick}>
+                      Submit and Download PDF
+                      </button>
+                    
                     </div>
                 </div>
                 </form>

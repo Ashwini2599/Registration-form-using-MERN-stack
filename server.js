@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-
-//const uuid = require("uuid/v4");
-
 require('dotenv').config();
 
 const app = express();
@@ -30,6 +27,12 @@ app.use('/users', usersRouter);
 const TusersRouter=require('./routes/tusers');
 app.use('/tusers',TusersRouter);
 
+/*const TverifyRouter=require('./routes/tverify');
+app.use('/tverify',TverifyRouter);*/
+
+app.get('/fetch-pdf', (req, res) => {
+  res.sendFile(`${__dirname}/result.pdf`)
+})
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
