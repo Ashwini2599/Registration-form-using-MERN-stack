@@ -34,7 +34,7 @@
     "jquery": "^3.5.0",
     "js-file-download": "^0.4.11",
     "mongoose": "^5.9.9",
-    "nodemailer": "^6.4.6",
+    "nodemailer": "^6.4.16",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
